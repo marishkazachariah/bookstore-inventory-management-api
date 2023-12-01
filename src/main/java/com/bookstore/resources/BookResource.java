@@ -65,6 +65,21 @@ public class BookResource {
         }
     }
 
+    // Could not get this to work on time
+    @GET
+    @Path("/byAuthor/{authorName}")
+    public Response getBooksByAuthor(@PathParam("authorName") String authorName) {
+        try {
+            List<Book> booksByAuthor = bookServiceDao.getBooksByAuthor(authorName);
+            return Response.ok(booksByAuthor).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("Internal Server Error")
+                    .build();
+        }
+    }
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addBook(Book book) {

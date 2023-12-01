@@ -102,4 +102,44 @@ public class BookServiceDao implements BookService {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public List<Book> getBooksByAuthor(String authorName) {
+        List<Book> booksByAuthor = new ArrayList<>();
+
+        try (Connection connection = DBConnection.getConnection()) {
+            String sql = "SELECT books.id, books.title, books.price, books.quantity, books.author_id, " +
+                    "authors.first_name, authors.last_name, authors.email " +
+                    "FROM books " +
+                    "JOIN authors ON books.author_id = authors.id " +
+                    "WHERE authors.first_name = ? OR authors.last_name = ?";
+
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                int idx = authorName.lastIndexOf(' ');
+                if (idx == -1)
+                    throw new IllegalArgumentException("Only a single name: " + authorName);
+                String firstName = authorName.substring(0, idx);
+                String lastName  = authorName.substring(idx + 1);
+                statement.setString(1, firstName);
+                statement.setString(2, lastName);
+
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    while (resultSet.next()) {
+                        Book book = new Book();
+                        book.setId(resultSet.getInt("id"));
+                        book.setTitle(resultSet.getString("title"));
+                        book.setPrice(resultSet.getDouble("price"));
+                        book.setQuantity(resultSet.getInt("quantity"));
+                        book.setAuthorId(resultSet.getInt("author_id"));
+
+                        booksByAuthor.add(book);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return booksByAuthor;
+    }
 }
