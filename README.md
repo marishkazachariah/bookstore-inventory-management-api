@@ -2,6 +2,40 @@
 Mini project for Week 13 Day 05 of Startsteps x Zalando Java Program
 Click [here](https://github.com/marishkazachariah/bookstore-inventory-management-api/pull/1) for the PR
 
+## Postman Collection of Requests
+I couldn't figure out how to use [Swagger](https://app.swaggerhub.com/) without wasting too much time, so I'm listing the endpoints here:
+
+### For books
+- `GET http://localhost:8080/books/` fetches all books
+- `GET http://localhost:8080/books/$id` fetches a specific book by its id number
+- `POST http://localhost:8080/books/` posts a book using the following JSON body parameter:
+```
+{
+    "title":"Do Androids Dream of Electric Sheep",
+    "author":"Phillip K. Dick",
+    "price": "phillipkdick@example.com"
+    "quantity": 123,
+    "author_id": 2
+}
+```
+- `PUT http://localhost:8080/books/$id` edit a specific book by its id number and altering its content with the JSON body parameter
+- `DELETE http://localhost:8080/books/$id` deletes a book from the database by its id number
+
+### For authors
+- `GET http://localhost:8080/authors/` fetches all authors
+- `GET http://localhost:8080/authors/$id` fetches a specific author by its id number
+- `POST http://localhost:8080/authors/` posts an author using the following JSON body parameter:
+```
+{
+    "id":"43",
+    "firstName":"Torrey",
+    "lastName": "Peters"
+    "email": "tpeters@gmail.com",
+}
+```
+- `PUT http://localhost:8080/authors/$id` edit a specific author by its id number and altering its content with the JSON body parameter
+- `DELETE http://localhost:8080/authors/$id` deletes an author from the database by its id number. Books should be deleted from the database if author is deleted
+
 ## Tech Stack used
 - Backend: Java with JDBC
 - Database: MySQL or another SQL-based database
