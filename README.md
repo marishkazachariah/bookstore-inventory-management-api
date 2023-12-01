@@ -13,7 +13,7 @@ Click [here](https://github.com/marishkazachariah/bookstore-inventory-management
 - JSON to parse data into JSON objects
 - [Glassfish Jersey](https://mvnrepository.com/artifact/org.glassfish.jersey)
 
-### Requirements
+## Requirements
 Outline specific scenarios and expected outcomes for testing each endpoint.
 - Test GET Endpoints:
 - [x] Test listing all books and retrieving specific books.
