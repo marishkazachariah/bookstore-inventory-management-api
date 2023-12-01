@@ -24,8 +24,8 @@ Outline specific scenarios and expected outcomes for testing each endpoint.
 - Validate Responses:
 - [x] Ensure correct status codes and data are returned.
 
-### Optional Requirements (Afternoon Exercises)
-#### Task 5: Extend Database Schema
+## Optional Requirements (Afternoon Exercises)
+### Task 5: Extend Database Schema
 1. Design Author Table Schema:
 - [x] Define column types and constraints for authors (e.g., author_id as PRIMARY KEY).
 2. Create Authors Table in Database:
@@ -38,3 +38,16 @@ ALTER TABLE books ADD FOREIGN KEY (author_id) REFERENCES authors(id) ON DELETE C
 ```
 5. Populate Authors Table:
 - [x] Insert sample data into the authors table for testing purposes.
+
+### Task 6: Modify CRUD Operations to Include Authors
+1. Update BookResource for Author Integration:
+- [x] Modify the data model of Book to include author_id.
+- [x] Update addBook, updateBook, and deleteBook methods to handle the new
+author_id field.
+2. Develop AuthorResource Class:
+- [x] Create AuthorResource with methods like getAllAuthors(), getAuthorById(int
+authorId), addAuthor(Author author), etc.
+- [x] Implement JDBC operations for each of these methods.
+3. Integrate Author Details in Book Queries:
+- [x] Modify book-related queries to join with the authors table and fetch author details.
+- *Personal note: While I implemented the join method in the BookServiceDao, I could not get it work in BookResources/with REST services*
