@@ -1,3 +1,5 @@
 
-m	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¼¯×½8ÝÙÖ¤Â1
-L	java:S106"+Replace this use of System.out by a logger.(µÏµàûÿÿÿÿ8è·Ò¤Â1
+m	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¼¯×½8ÚþÚ¥Â1
+L	java:S106"+Replace this use of System.out by a logger.(µÏµàûÿÿÿÿ8äþÚ¥Â1
+R
+java:S1128"5Remove this unused import 'com.bookstore.model.Book'.(Î²œé8öÔÜ¥Â1

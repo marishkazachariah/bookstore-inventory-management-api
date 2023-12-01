@@ -1,5 +1,6 @@
 package com.bookstore;
 
+import com.bookstore.model.Book;
 import com.bookstore.resources.BookResource;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;

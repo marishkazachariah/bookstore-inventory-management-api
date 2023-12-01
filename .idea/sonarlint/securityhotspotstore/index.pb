@@ -14,3 +14,11 @@ o
 ?src/main/java/com/bookstore/database/DBConnectionException.java,b/d/bd369fa9b2081f3f6eaea567d4ddb359506aa5cb
 g
 7src/main/java/com/bookstore/resources/BookResource.java,4/5/45ec291bec43c29de2d9f1a8b6a9bab9bcc8d0b5
+[
++src/main/java/com/bookstore/model/Book.java,8/b/8b306234741a11f34882aff3a9d755c122b776d7
+d
+4src/main/java/com/bookstore/service/BookService.java,0/8/08a3a0d44d09fea72d33b350ec9dbe8c952cf4e1
+h
+8src/main/java/com/bookstore/service/BookServiceImpl.java,1/e/1e3b3ea2dbc7ed75204b9d001286494f5e7bd3ad
+g
+7src/main/java/com/bookstore/service/BookServiceDao.java,d/8/d8b6f6af382dc353a4ff23a03ca8296c1963f1ae
