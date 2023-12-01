@@ -16,7 +16,7 @@ public class BookServiceDao implements BookService {
                 ps.setString(2, book.getAuthor());
                 ps.setDouble(3, book.getPrice());
                 ps.setInt(4, book.getQuantity());
-                ps.setInt(4, book.getAuthorId());
+                ps.setInt(5, book.getAuthorId());
                 ps.executeUpdate();
             }
         } catch (SQLException e) {
