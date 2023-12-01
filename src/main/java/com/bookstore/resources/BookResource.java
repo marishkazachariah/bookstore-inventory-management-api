@@ -64,6 +64,67 @@ public class BookResource {
                     .build();
         }
     }
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response addBook(Book book) {
+        try {
+            bookServiceDao.addBook(book);
+
+            return Response.status(Response.Status.CREATED)
+                    .entity(book)
+                    .build();
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("Internal Server Error")
+                    .build();
+        }
+    }
+
+    @PUT
+    @Path("/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updateBook(@PathParam("id") int id, Book book) {
+        if (id <= 0) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("Invalid book ID: " + id)
+                    .build();
+        }
+
+        try {
+            book.setId(id);
+            bookServiceDao.updateBook(book);
+
+            return Response.ok(book).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("Internal Server Error")
+                    .build();
+        }
+    }
+
+    @DELETE
+    @Path("/{id}")
+    public Response deleteBook(@PathParam("id") int id) {
+        if(id <= 0) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("Invalid book ID: " + id)
+                    .build();
+        }
+        try {
+            bookServiceDao.deleteBook(id);
+            return Response.noContent().build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return  Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("Internal Server Error")
+                    .build();
+        }
+    }
 }
 
 
