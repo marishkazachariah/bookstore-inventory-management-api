@@ -15,6 +15,7 @@ public class Book {
     private String author;
     private double price;
     private int quantity;
+    private int authorId;
 
     @Override
     public boolean equals(Object object) {

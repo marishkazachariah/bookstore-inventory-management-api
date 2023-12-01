@@ -11,11 +11,12 @@ public class BookServiceDao implements BookService {
     @Override
     public void addBook(Book book) {
         try (Connection connection = DBConnection.getConnection()) {
-            try (PreparedStatement ps = connection.prepareStatement("INSERT INTO books (title, author, price, quantity) VALUES (?, ?, ?, ?)")) {
+            try (PreparedStatement ps = connection.prepareStatement("INSERT INTO books (title, author, price, quantity, author_id) VALUES (?, ?, ?, ?, ?)")) {
                 ps.setString(1, book.getTitle());
                 ps.setString(2, book.getAuthor());
                 ps.setDouble(3, book.getPrice());
                 ps.setInt(4, book.getQuantity());
+                ps.setInt(4, book.getAuthorId());
                 ps.executeUpdate();
             }
         } catch (SQLException e) {
@@ -37,7 +38,9 @@ public class BookServiceDao implements BookService {
                         rs.getString("title"),
                         rs.getString("author"),
                         rs.getDouble("price"),
-                        rs.getInt("quantity"));
+                        rs.getInt("quantity"),
+                        rs.getInt("author_id"));
+
                 books.add(book);
             }
         } catch (SQLException e) {
@@ -59,7 +62,8 @@ public class BookServiceDao implements BookService {
                         resultSet.getString("title"),
                         resultSet.getString("author"),
                         resultSet.getDouble("price"),
-                        resultSet.getInt("quantity"));
+                        resultSet.getInt("quantity"),
+                        resultSet.getInt("author_id"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -70,13 +74,14 @@ public class BookServiceDao implements BookService {
     @Override
     public void updateBook(Book book) {
         try (Connection connection = DBConnection.getConnection()) {
-            try (PreparedStatement ps = connection.prepareStatement("UPDATE books SET title = ?, author = ?, price = ?, quantity = ? WHERE id = ?")) {
+            try (PreparedStatement ps = connection.prepareStatement("UPDATE books SET title = ?, author = ?, price = ?, quantity = ?, author_id = ? WHERE id = ?")) {
                 ps.setString(1, book.getTitle());
                 ps.setString(2, book.getAuthor());
                 ps.setDouble(3, book.getPrice());
                 ps.setInt(4, book.getQuantity());
+                ps.setInt(5, book.getAuthorId());
 
-                ps.setInt(5, book.getId());
+                ps.setInt(6, book.getId());
 
                 ps.executeUpdate();
             }
