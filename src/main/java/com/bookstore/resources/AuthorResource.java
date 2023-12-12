@@ -1,37 +1,38 @@
 package com.bookstore.resources;
 
 import com.bookstore.model.Author;
+import com.bookstore.service.AuthorService;
 import com.bookstore.service.AuthorServiceDao;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.util.List;
 import javax.ws.rs.core.Response;
+import java.sql.SQLException;
+import java.util.List;
 
 @Path("/authors")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class AuthorResource {
-    AuthorServiceDao authorServiceDao = new AuthorServiceDao();
+    AuthorService authorService = new AuthorServiceDao();
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllBooks() {
+    public Response getAllAuthors() {
         try {
-            List<Author> books = authorServiceDao.getAllAuthors();
+            List<Author> authors = authorService.getAllAuthors();
 
-            if (books != null && !books.isEmpty()) {
-                return Response.ok(books).build();
+            if (authors != null && !authors.isEmpty()) {
+                return Response.ok(authors).build();
             } else {
                 return Response.status(Response.Status.NOT_FOUND)
                         .entity("No authors found")
                         .build();
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
-
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity("Internal Server Error")
+                    .entity("Error retrieving authors from the database")
                     .build();
         }
     }
@@ -42,12 +43,12 @@ public class AuthorResource {
     public Response getAuthor(@PathParam("id") int id) {
         if (id <= 0) {
             return Response.status(Response.Status.BAD_REQUEST)
-                    .entity("Invalid book ID: " + id)
+                    .entity("Invalid author ID: " + id)
                     .build();
         }
 
         try {
-            Author author = authorServiceDao.getAuthorById(id);
+            Author author = authorService.getAuthorById(id);
 
             if (author != null) {
                 return Response.ok(author).build();
@@ -56,11 +57,10 @@ public class AuthorResource {
                         .entity("Author with ID " + id + " not found")
                         .build();
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
-
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity("Internal Server Error")
+                    .entity("Error retrieving author from the database")
                     .build();
         }
     }
@@ -69,16 +69,15 @@ public class AuthorResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addAuthor(Author author) {
         try {
-            authorServiceDao.addAuthor(author);
+            authorService.addAuthor(author);
 
             return Response.status(Response.Status.CREATED)
                     .entity(author)
                     .build();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
-
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity("Internal Server Error")
+                    .entity("Error adding author to the database")
                     .build();
         }
     }
@@ -95,14 +94,13 @@ public class AuthorResource {
 
         try {
             author.setId(id);
-            authorServiceDao.updateAuthor(author);
+            authorService.updateAuthor(author);
 
             return Response.ok(author).build();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
-
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity("Internal Server Error")
+                    .entity("Error updating author in the database")
                     .build();
         }
     }
@@ -110,22 +108,19 @@ public class AuthorResource {
     @DELETE
     @Path("/{id}")
     public Response deleteAuthor(@PathParam("id") int id) {
-        if(id <= 0) {
+        if (id <= 0) {
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity("Invalid author ID: " + id)
                     .build();
         }
         try {
-            authorServiceDao.deleteAuthor(id);
+            authorService.deleteAuthor(id);
             return Response.noContent().build();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
-            return  Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity("Internal Server Error")
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("Error deleting author from the database")
                     .build();
         }
     }
 }
-
-
-

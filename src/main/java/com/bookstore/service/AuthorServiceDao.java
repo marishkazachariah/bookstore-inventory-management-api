@@ -9,7 +9,7 @@ import java.util.List;
 
 public class AuthorServiceDao implements AuthorService {
     @Override
-    public void addAuthor(Author author) {
+    public void addAuthor(Author author) throws SQLException {
         try (Connection connection = DBConnection.getConnection()) {
             try (PreparedStatement ps = connection.prepareStatement("INSERT INTO authors (id, first_name, last_name, email) VALUES (?, ?, ?, ?)")) {
                 ps.setInt(1, author.getId());
@@ -18,13 +18,11 @@ public class AuthorServiceDao implements AuthorService {
                 ps.setString(4, author.getEmail());
                 ps.executeUpdate();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 
     @Override
-    public List<Author> getAllAuthors() {
+    public List<Author> getAllAuthors() throws SQLException {
         List<Author> authors = new ArrayList<>();
 
         try (Connection connection = DBConnection.getConnection();
@@ -39,15 +37,13 @@ public class AuthorServiceDao implements AuthorService {
                         rs.getString("email"));
                 authors.add(author);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
 
         return authors;
     }
 
     @Override
-    public Author getAuthorById(int id) {
+    public Author getAuthorById(int id) throws SQLException {
         try (Connection connection = DBConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM authors WHERE id = ?")) {
             preparedStatement.setInt(1, id);
@@ -59,39 +55,32 @@ public class AuthorServiceDao implements AuthorService {
                         resultSet.getString("last_name"),
                         resultSet.getString("email"));
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
+
         return null;
     }
 
     @Override
-    public void updateAuthor(Author author) {
+    public void updateAuthor(Author author) throws SQLException {
         try (Connection connection = DBConnection.getConnection()) {
             try (PreparedStatement ps = connection.prepareStatement("UPDATE authors SET first_name = ?, last_name = ?, email = ? WHERE id = ?")) {
                 ps.setString(1, author.getFirstName());
                 ps.setString(2, author.getLastName());
                 ps.setString(3, author.getEmail());
-
                 ps.setInt(4, author.getId());
-
                 ps.executeUpdate();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 
     @Override
-    public void deleteAuthor(int id) {
+    public void deleteAuthor(int id) throws SQLException {
         try (Connection connection = DBConnection.getConnection()) {
             try (PreparedStatement ps = connection.prepareStatement("DELETE FROM authors WHERE id = ?")) {
                 ps.setInt(1, id);
                 ps.executeUpdate();
                 connection.commit();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 }

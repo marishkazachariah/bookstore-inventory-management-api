@@ -18,7 +18,13 @@ g
 +src/main/java/com/bookstore/model/Book.java,8/b/8b306234741a11f34882aff3a9d755c122b776d7
 d
 4src/main/java/com/bookstore/service/BookService.java,0/8/08a3a0d44d09fea72d33b350ec9dbe8c952cf4e1
-h
-8src/main/java/com/bookstore/service/BookServiceImpl.java,1/e/1e3b3ea2dbc7ed75204b9d001286494f5e7bd3ad
 g
 7src/main/java/com/bookstore/service/BookServiceDao.java,d/8/d8b6f6af382dc353a4ff23a03ca8296c1963f1ae
+]
+-src/main/java/com/bookstore/model/Author.java,d/3/d3e4887adc8ef366505f4c3494500cab3b65105c
+f
+6src/main/java/com/bookstore/service/AuthorService.java,8/5/858089d043b343e9977f9399f19287cc68c268cd
+i
+9src/main/java/com/bookstore/service/AuthorServiceDao.java,b/9/b9fd0dcee3d0d0445f5d90a66ea79c7885d95796
+i
+9src/main/java/com/bookstore/resources/AuthorResource.java,7/6/764fa080232d4a0095677fed3d9a1271c40bb2c4

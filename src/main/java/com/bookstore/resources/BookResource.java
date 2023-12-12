@@ -1,24 +1,26 @@
 package com.bookstore.resources;
 
 import com.bookstore.model.Book;
+import com.bookstore.service.BookService;
 import com.bookstore.service.BookServiceDao;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.util.List;
 import javax.ws.rs.core.Response;
+import java.sql.SQLException;
+import java.util.List;
 
 @Path("/books")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class BookResource {
-    BookServiceDao bookServiceDao = new BookServiceDao();
+    BookService bookService = new BookServiceDao();
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllBooks() {
         try {
-            List<Book> books = bookServiceDao.getAllBooks();
+            List<Book> books = bookService.getAllBooks();
 
             if (books != null && !books.isEmpty()) {
                 return Response.ok(books).build();
@@ -27,11 +29,10 @@ public class BookResource {
                         .entity("No books found")
                         .build();
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
-
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity("Internal Server Error")
+                    .entity("Error retrieving books from the database")
                     .build();
         }
     }
@@ -47,7 +48,7 @@ public class BookResource {
         }
 
         try {
-            Book book = bookServiceDao.getBookById(id);
+            Book book = bookService.getBookById(id);
 
             if (book != null) {
                 return Response.ok(book).build();
@@ -56,26 +57,24 @@ public class BookResource {
                         .entity("Book with ID " + id + " not found")
                         .build();
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
-
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity("Internal Server Error")
+                    .entity("Error retrieving book from the database")
                     .build();
         }
     }
 
-    // Could not get this to work on time
     @GET
     @Path("/byAuthor/{authorName}")
     public Response getBooksByAuthor(@PathParam("authorName") String authorName) {
         try {
-            List<Book> booksByAuthor = bookServiceDao.getBooksByAuthor(authorName);
+            List<Book> booksByAuthor = bookService.getBooksByAuthor(authorName);
             return Response.ok(booksByAuthor).build();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity("Internal Server Error")
+                    .entity("Error retrieving books by author from the database")
                     .build();
         }
     }
@@ -84,16 +83,15 @@ public class BookResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addBook(Book book) {
         try {
-            bookServiceDao.addBook(book);
+            bookService.addBook(book);
 
             return Response.status(Response.Status.CREATED)
                     .entity(book)
                     .build();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
-
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity("Internal Server Error")
+                    .entity("Error adding book to the database")
                     .build();
         }
     }
@@ -110,14 +108,13 @@ public class BookResource {
 
         try {
             book.setId(id);
-            bookServiceDao.updateBook(book);
+            bookService.updateBook(book);
 
             return Response.ok(book).build();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
-
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity("Internal Server Error")
+                    .entity("Error updating book in the database")
                     .build();
         }
     }
@@ -131,16 +128,13 @@ public class BookResource {
                     .build();
         }
         try {
-            bookServiceDao.deleteBook(id);
+            bookService.deleteBook(id);
             return Response.noContent().build();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             return  Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity("Internal Server Error")
+                    .entity("Error deleting book from the database")
                     .build();
         }
     }
 }
-
-
-

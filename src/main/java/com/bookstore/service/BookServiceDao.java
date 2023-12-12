@@ -9,7 +9,7 @@ import java.util.List;
 
 public class BookServiceDao implements BookService {
     @Override
-    public void addBook(Book book) {
+    public void addBook(Book book) throws SQLException {
         try (Connection connection = DBConnection.getConnection()) {
             try (PreparedStatement ps = connection.prepareStatement("INSERT INTO books (title, author, price, quantity, author_id) VALUES (?, ?, ?, ?, ?)")) {
                 ps.setString(1, book.getTitle());
@@ -19,13 +19,11 @@ public class BookServiceDao implements BookService {
                 ps.setInt(5, book.getAuthorId());
                 ps.executeUpdate();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 
     @Override
-    public List<Book> getAllBooks() {
+    public List<Book> getAllBooks() throws SQLException {
         List<Book> books = new ArrayList<>();
 
         try (Connection connection = DBConnection.getConnection();
@@ -43,15 +41,12 @@ public class BookServiceDao implements BookService {
 
                 books.add(book);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
-
         return books;
     }
 
     @Override
-    public Book getBookById(int id) {
+    public Book getBookById(int id) throws SQLException {
         try (Connection connection = DBConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM books WHERE id = ?")) {
             preparedStatement.setInt(1, id);
@@ -65,14 +60,12 @@ public class BookServiceDao implements BookService {
                         resultSet.getInt("quantity"),
                         resultSet.getInt("author_id"));
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
         return null;
     }
 
     @Override
-    public void updateBook(Book book) {
+    public void updateBook(Book book) throws SQLException {
         try (Connection connection = DBConnection.getConnection()) {
             try (PreparedStatement ps = connection.prepareStatement("UPDATE books SET title = ?, author = ?, price = ?, quantity = ?, author_id = ? WHERE id = ?")) {
                 ps.setString(1, book.getTitle());
@@ -85,26 +78,22 @@ public class BookServiceDao implements BookService {
 
                 ps.executeUpdate();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 
     @Override
-    public void deleteBook(int id) {
+    public void deleteBook(int id) throws SQLException {
         try (Connection connection = DBConnection.getConnection()) {
             try (PreparedStatement ps = connection.prepareStatement("DELETE FROM books WHERE id = ?")) {
                 ps.setInt(1, id);
                 ps.executeUpdate();
                 connection.commit();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 
     @Override
-    public List<Book> getBooksByAuthor(String authorName) {
+    public List<Book> getBooksByAuthor(String authorName) throws SQLException {
         List<Book> booksByAuthor = new ArrayList<>();
 
         try (Connection connection = DBConnection.getConnection()) {
@@ -136,10 +125,7 @@ public class BookServiceDao implements BookService {
                     }
                 }
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
-
         return booksByAuthor;
     }
 }
