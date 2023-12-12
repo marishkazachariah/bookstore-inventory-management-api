@@ -8,3 +8,23 @@ U
 :
 
 .gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302
+f
+6src/main/java/com/bookstore/database/DBConnection.java,b/a/ba237f0b3a15cd387618d3ec4e365297ddb587ad
+o
+?src/main/java/com/bookstore/database/DBConnectionException.java,b/d/bd369fa9b2081f3f6eaea567d4ddb359506aa5cb
+g
+7src/main/java/com/bookstore/resources/BookResource.java,4/5/45ec291bec43c29de2d9f1a8b6a9bab9bcc8d0b5
+[
++src/main/java/com/bookstore/model/Book.java,8/b/8b306234741a11f34882aff3a9d755c122b776d7
+d
+4src/main/java/com/bookstore/service/BookService.java,0/8/08a3a0d44d09fea72d33b350ec9dbe8c952cf4e1
+g
+7src/main/java/com/bookstore/service/BookServiceDao.java,d/8/d8b6f6af382dc353a4ff23a03ca8296c1963f1ae
+]
+-src/main/java/com/bookstore/model/Author.java,d/3/d3e4887adc8ef366505f4c3494500cab3b65105c
+f
+6src/main/java/com/bookstore/service/AuthorService.java,8/5/858089d043b343e9977f9399f19287cc68c268cd
+i
+9src/main/java/com/bookstore/service/AuthorServiceDao.java,b/9/b9fd0dcee3d0d0445f5d90a66ea79c7885d95796
+i
+9src/main/java/com/bookstore/resources/AuthorResource.java,7/6/764fa080232d4a0095677fed3d9a1271c40bb2c4
